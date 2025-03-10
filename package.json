@@ -1,6 +1,6 @@
 {
-  "name": "@synple/core",
-  "version": "1.0.0",
+  "name": "@jsynple/core",
+  "version": "0.1.0",
   "description": "All the core modules and types for the Synple application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -11,5 +11,25 @@
   "dependencies": {
     "@synple/core": "link:",
     "@types/node": "^22.13.10"
-  }
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/modular-synthesizer/core.git"
+  },
+  "keywords": [
+    "modular",
+    "synthesizer",
+    "library",
+    "core"
+  ],
+  "author": "Vincent Courtois",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/modular-synthesizer/core/issues"
+  },
+  "homepage": "https://github.com/modular-synthesizer/core#readme"
 }
