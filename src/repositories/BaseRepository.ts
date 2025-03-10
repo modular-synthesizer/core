@@ -1,3 +1,5 @@
+import { Api, Requestable } from "../network/Api";
+
 /**
  * A repository links a given model to a set of methods on the API. It provides easy methods
  * to create, update, delete or get model instances by infering URLs on the API.
@@ -7,12 +9,15 @@ export class BaseRepository {
     public readonly resource: string = '';
     // The main URI used in the frontend to define the route forwarding requests to the API.
     public readonly BASE_URI = process?.env?.BASE_API_URI ?? '/proxy';
+    // The API object passed as parameter in the constructor to enhance testability.
+    public readonly api: Requestable;
   
     /**
      * @param resource The base URI to build all URLs from, designating the resource to manipulate.
      */
-    public constructor(resource: string = '') {
+    public constructor(resource: string = '', api = new Api()) {
       this.resource = resource;
+      this.api = api;
     }
 
     /**

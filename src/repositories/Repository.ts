@@ -9,6 +9,7 @@ import { BaseRepository } from "./BaseRepository"
  * @author Vincent Courtois <courtois.vincent@outlook.com>
  */
 export class Repository<Payload, CreationPayload = Payload> extends BaseRepository {
+  
   /**
    * Transforms a creation payload in an actual instance of the resource by calling the POST /
    * endpoint on the corresponding API resource.
@@ -18,5 +19,9 @@ export class Repository<Payload, CreationPayload = Payload> extends BaseReposito
    */
   public create(payload: CreationPayload): Payload {
     return;
+  }
+
+  public async list(payload: Record<string, any> = {}): Promise<Array<Payload>> {
+    return (await this.api.get(this.uri('/'), payload)).json() as unknown as Array<Payload>;
   }
 }
