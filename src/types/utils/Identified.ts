@@ -1,15 +1,8 @@
 /**
- * This fundational type is made to evolve along with the possible evolution of types in javascript
- * When the feature is made possible, use a regular expression to validate the format of an UUIDv4.
- * @author Vincent Courtois<courtois.vincent@outlook.com>
- */
-export type Identifier = `${string}-${string}-${string}-${string}-${string}`;
-
-/**
  * Describes an object identified in our system by a unique ID. Any of our resources MUST be
  * identified in such a way to ease tracability and avoid not finding records when investigating.
  * @author Vincent Courtois<courtois.vincent@outlook.com>
  */
 export type Identified = {
-  id: Identifier,
+  id: string,
 };
