@@ -1,5 +1,6 @@
 export interface Requestable {
   get(url: string, payload: Record<string, any>): Promise<Response>;
+  post(url: string, payload: Record<string, any>): Promise<Response>;
 }
 
 export type Fetcher = typeof fetch;
@@ -26,6 +27,11 @@ export class Api implements Requestable {
     const fullUrl: string = this.complete(url);
     const urlWithParams: string = `${fullUrl}${params.toString() === '' ? '' : `?${params}`}`;
     return await this.fetcher(urlWithParams, { method: 'get' });
+  }
+
+  public async post(url: string = '', payload: Record<string, any> = {}): Promise<Response> {
+    const fullUrl: string = this.complete(url);
+    return await this.fetcher(fullUrl, { method: 'post', body: JSON.stringify(payload) });
   }
 
   public complete(url: string): string {

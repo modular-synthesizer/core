@@ -17,8 +17,8 @@ export class Repository<Payload, CreationPayload = Payload> extends BaseReposito
    * @param payload The elements needed to create the instance of the resource.
    * @returns The created instance of the resource with all fields duely filled.
    */
-  public create(payload: CreationPayload): Payload {
-    return;
+  public async create(payload: CreationPayload): Promise<Payload> {
+    return (await this.api.post(this.uri(), payload)).json();
   }
 
   /**
