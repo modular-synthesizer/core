@@ -1,5 +1,5 @@
-import { BaseRepository } from "./BaseRepository";
-import { Repository } from './Repository'
+import { BaseRepository } from "./utils/BaseRepository";
+import { Repository } from './utils/Repository'
 import { GeneratorsRepository } from './GeneratorsRepository'
 
 export {

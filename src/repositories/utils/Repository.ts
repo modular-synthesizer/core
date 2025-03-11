@@ -31,4 +31,14 @@ export class Repository<Payload, CreationPayload = Payload> extends BaseReposito
   public async list(payload: Record<string, any> = {}): Promise<Array<Payload>> {
     return (await this.api.get(this.uri(), payload)).json();
   }
+
+  /**
+   * Gets one instance of the resource on the API, searched by its unique identifier.
+   * 
+   * @param id The Unique Identifier for this instance of the resource.
+   * @returns The whole instance, formatted as returned by the API.
+   */
+  public async get(id: string): Promise<Payload> {
+    return (await this.api.get(this.uri(id), {})).json();
+  }
 }

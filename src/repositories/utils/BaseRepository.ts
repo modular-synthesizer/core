@@ -1,4 +1,4 @@
-import { Api, Requestable } from "../network/Api";
+import { Api, Requestable } from "../../network/Api";
 
 /**
  * A repository links a given model to a set of methods on the API. It provides easy methods
@@ -12,6 +12,7 @@ export class BaseRepository {
   
     /**
      * @param resource The base URI to build all URLs from, designating the resource to manipulate.
+     * @param api The Requestable object making requests on the API, used to format and fetch requests.
      */
     public constructor(resource: string = '', api: Requestable = new Api()) {
       this.resource = resource;

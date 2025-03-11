@@ -1,5 +1,5 @@
 import { Generator, GeneratorDescription } from "../types/Generator";
-import { Repository } from "./Repository";
+import { Repository } from "./utils/Repository";
 
 /**
  * Repositories allowing you to obtain informations about the node generators used to create
