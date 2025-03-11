@@ -1,6 +1,6 @@
 {
   "name": "@jsynple/core",
-  "version": "0.2.8",
+  "version": "0.2.9",
   "description": "All the core modules and types for the Synple application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

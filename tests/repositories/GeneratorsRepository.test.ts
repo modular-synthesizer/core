@@ -20,7 +20,7 @@ describe('#list', () => {
   });
   it('Correctly queries for the list of generators', () => {
     repository.list(token);
-    expect(spy).toBeCalledWith('/proxy/generators', { auth_token: "422" });
+    expect(spy).toBeCalledWith('/proxy/generators', { params: { auth_token: "422" } });
   });
 });
 
@@ -33,7 +33,9 @@ describe('#create', () => {
   });
   it('Correctly formats the query to create a generator', () => {
     repository.create(payload, token);
-    expect(spy).toBeCalledWith('/proxy/generators', { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" });
+    expect(spy).toBeCalledWith('/proxy/generators', {
+      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" }
+    });
   });
 });
 
@@ -46,6 +48,8 @@ describe('#update', () => {
   });
   it('Correctly formats the query to update a generator', () => {
     repository.update(exampleGenerator, token);
-    expect(spy).toBeCalledWith('/proxy/generators/1', { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" });
+    expect(spy).toBeCalledWith('/proxy/generators/1', {
+      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" }
+    });
   });
 });
