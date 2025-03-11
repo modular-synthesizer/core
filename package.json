@@ -1,6 +1,6 @@
 {
   "name": "@jsynple/core",
-  "version": "0.2.5",
+  "version": "0.2.6",
   "description": "All the core modules and types for the Synple application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "vitest --ui",
-    "publish": "tsc && pnpm publish"
+    "buildAndPublish": "tsc && pnpm publish"
   },
   "repository": {
     "type": "git",
