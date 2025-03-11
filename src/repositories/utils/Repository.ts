@@ -30,7 +30,7 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param payload The filtering criteria applied to this listing search.
    * @returns an array of results getting the list of elements requested.
    */
-  public async list(token: string, payload: Record<string, any> = {}): Promise<Array<Payload>> {
+  public async list(token: string, payload: Record<string, unknown> = {}): Promise<Payload[]> {
     return (await this.api.get(this.uri(), { params: this.enrich(payload, token) })).data;
   }
 
@@ -52,8 +52,8 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param keys an array of keys available in the instance of the resource to limit the update to them.
    * @returns the updated version of the record after API request and response.
    */
-  public async update(payload: Payload, token: string, keys?: Array<keyof Payload>): Promise<Payload> {
-    const filtered: Record<keyof Payload, any> = omit(keys ? pick(payload, keys) : payload, 'id');
+  public async update(payload: Payload, token: string, keys?: (keyof Payload)[]): Promise<Payload> {
+    const filtered: Record<keyof Payload, unknown> = omit(keys ? pick(payload, keys) : payload, 'id');
     return (await this.api.put(this.uri(payload.id), { data: this.enrich(filtered, token) })).data;
   }
 

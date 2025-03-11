@@ -1,6 +1,6 @@
 {
   "name": "@jsynple/core",
-  "version": "0.2.10",
+  "version": "0.2.11",
   "description": "All the core modules and types for the Synple application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -16,6 +16,10 @@
     "lodash": "^4.17.21"
   },
   "devDependencies": {
+    "@eslint/js": "^9.22.0",
+    "eslint": "^9.22.0",
+    "typescript": "^5.8.2",
+    "typescript-eslint": "^8.26.1",
     "vitest": "^3.0.8"
   },
   "scripts": {

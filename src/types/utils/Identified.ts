@@ -3,6 +3,6 @@
  * identified in such a way to ease tracability and avoid not finding records when investigating.
  * @author Vincent Courtois<courtois.vincent@outlook.com>
  */
-export type Identified = {
+export interface Identified {
   id: string,
-};
+}

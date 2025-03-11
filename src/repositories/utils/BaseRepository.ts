@@ -1,5 +1,4 @@
 import { Api, Requestable } from "../../network/Api";
-import { Session } from "../../types/Session";
 
 /**
  * A repository links a given model to a set of methods on the API. It provides easy methods
@@ -27,7 +26,7 @@ export class BaseRepository {
      * @param appended often times the identifier of the resource you're trying to query.
      * @returns a url to access the resource you're trying to query.
      */
-    public uri(appended: string = ''): string {
+    public uri(appended = ''): string {
       const resource: string[] = this.resource === '' ? [] : [ this.resource ];
       const ending: string[] = appended === '' ? [] : [ appended ];
       return [ ...resource, ...ending ].join('/');
