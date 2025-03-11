@@ -4,4 +4,4 @@ import { Repository } from "./Repository";
 /**
  * 
  */
-export class GeneratorRepository extends Repository<Generator, GeneratorDescription> { };
+export class GeneratorsRepository extends Repository<Generator, GeneratorDescription> { };

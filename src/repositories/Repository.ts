@@ -29,6 +29,6 @@ export class Repository<Payload, CreationPayload = Payload> extends BaseReposito
    * @returns an array of results getting the list of elements requested.
    */
   public async list(payload: Record<string, any> = {}): Promise<Array<Payload>> {
-    return (await this.api.get(this.uri('/'), payload)).json();
+    return (await this.api.get(this.uri(), payload)).json();
   }
 }

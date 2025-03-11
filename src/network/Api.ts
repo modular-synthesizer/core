@@ -21,7 +21,7 @@ export class Api implements Requestable {
     this.prefix = prefix;
   }
 
-  public async get(url: string = '/', payload: Record<string, any> = {}): Promise<Response> {
+  public async get(url: string = '', payload: Record<string, any> = {}): Promise<Response> {
     const params: URLSearchParams = new URLSearchParams(payload);
     const fullUrl: string = this.complete(url);
     const urlWithParams: string = `${fullUrl}${params.toString() === '' ? '' : `?${params}`}`;
@@ -29,6 +29,7 @@ export class Api implements Requestable {
   }
 
   public complete(url: string): string {
-    return `${this.prefix}${url}`
+    if (url[0] === '/') url = url.slice(1, url.length);
+    return [this.prefix, url].join('/');
   }
 }

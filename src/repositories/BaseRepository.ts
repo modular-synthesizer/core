@@ -13,7 +13,7 @@ export class BaseRepository {
     /**
      * @param resource The base URI to build all URLs from, designating the resource to manipulate.
      */
-    public constructor(resource: string = '', api = new Api()) {
+    public constructor(resource: string = '', api: Requestable = new Api()) {
       this.resource = resource;
       this.api = api;
     }
