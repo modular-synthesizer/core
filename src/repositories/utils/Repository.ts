@@ -19,8 +19,8 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param payload The elements needed to create the instance of the resource.
    * @returns The created instance of the resource with all fields duely filled.
    */
-  public async create(payload: CreationPayload): Promise<Payload> {
-    return (await this.api.post(this.uri(), this.enrich(payload))).data;
+  public async create(payload: CreationPayload, token: string): Promise<Payload> {
+    return (await this.api.post(this.uri(), this.enrich(payload, token))).data;
   }
 
   /**
@@ -30,8 +30,8 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param payload The filtering criteria applied to this listing search.
    * @returns an array of results getting the list of elements requested.
    */
-  public async list(payload: Record<string, any> = {}): Promise<Array<Payload>> {
-    return (await this.api.get(this.uri(), this.enrich(payload))).data;
+  public async list(token: string, payload: Record<string, any> = {}): Promise<Array<Payload>> {
+    return (await this.api.get(this.uri(), this.enrich(payload, token))).data;
   }
 
   /**
@@ -40,8 +40,8 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param id The Unique Identifier for this instance of the resource.
    * @returns The whole instance, formatted as returned by the API.
    */
-  public async get(id: string): Promise<Payload> {
-    return (await this.api.get(this.uri(id), this.enrich({}))).data;
+  public async get(id: string, token: string): Promise<Payload> {
+    return (await this.api.get(this.uri(id), this.enrich({}, token))).data;
   }
 
   /**
@@ -52,12 +52,12 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param keys an array of keys available in the instance of the resource to limit the update to them.
    * @returns the updated version of the record after API request and response.
    */
-  public async update(payload: Payload, keys?: Array<keyof Payload>): Promise<Payload> {
+  public async update(payload: Payload, token: string, keys?: Array<keyof Payload>): Promise<Payload> {
     const filtered: Record<keyof Payload, any> = omit(keys ? pick(payload, keys) : payload, 'id');
-    return (await this.api.put(this.uri(payload.id), this.enrich(filtered))).data;
+    return (await this.api.put(this.uri(payload.id), this.enrich(filtered, token))).data;
   }
 
-  private enrich<T>(payload: T): T & { auth_token: string } {
-    return { auth_token: this.handler.session.token, ...payload };
+  private enrich<T>(payload: T, token: string): T & { auth_token: string } {
+    return { auth_token: token, ...payload };
   }
 }

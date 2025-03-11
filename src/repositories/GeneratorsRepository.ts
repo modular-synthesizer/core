@@ -1,6 +1,5 @@
 import { Api, Requestable } from "../network/Api";
 import { Generator, GeneratorDescription } from "../types/Generator";
-import { SessionHandler } from "./utils/BaseRepository";
 import { Repository } from "./utils/Repository";
 
 /**
@@ -9,7 +8,7 @@ import { Repository } from "./utils/Repository";
  * @author vincent Courtois <courtois.vincent@outlook.com>
  */
 export class GeneratorsRepository extends Repository<Generator, GeneratorDescription> {
-  public constructor(handler: SessionHandler, api: Requestable = new Api()) {
-    super('generators', handler, api)
+  public constructor(api: Requestable = new Api()) {
+    super('generators', api)
   }
 };

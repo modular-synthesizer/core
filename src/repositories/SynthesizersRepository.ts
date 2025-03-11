@@ -1,6 +1,5 @@
 import { Api, Requestable } from "../network/Api";
 import { Synthesizer, SynthesizerDescription } from "../types/Synthesizer";
-import { SessionHandler } from "./utils/BaseRepository";
 import { Repository } from "./utils/Repository";
 
 /**
@@ -10,8 +9,8 @@ import { Repository } from "./utils/Repository";
  * @author Vincent Courtois <courtois.vincent@outlook.com>
  */
 export class SynthesizersRepository extends Repository<Synthesizer, SynthesizerDescription> {
-  public constructor(handler: SessionHandler, api: Requestable = new Api()) {
-    super('synthesizers', handler, api);
+  public constructor(api: Requestable = new Api()) {
+    super('synthesizers', api);
   }
   
   /**
@@ -21,7 +20,7 @@ export class SynthesizersRepository extends Repository<Synthesizer, SynthesizerD
    * @param synthesizer The synthesizer to update the coordinates from.
    * @returns the updated synthesizer after API query.
    */
-  public async update(synthesizer: Synthesizer): Promise<Synthesizer> {
-    return super.update(synthesizer, ['scale', 'x', 'y']);
+  public async update(synthesizer: Synthesizer, token: string): Promise<Synthesizer> {
+    return super.update(synthesizer, token, ['scale', 'x', 'y']);
   }
 }

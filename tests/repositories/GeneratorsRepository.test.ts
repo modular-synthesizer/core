@@ -3,25 +3,23 @@ import { Api, Requestable } from '../../src/network/Api';
 import { GeneratorsRepository } from '../../src/repositories'
 import { GeneratorDescription, type Generator } from '../../src/types/Generator'
 import axios from 'axios';
-import { SessionHandler } from '../../src/repositories/utils/BaseRepository';
-
-const handler: SessionHandler = { session: { id: "42", token: "422" }, reset() {} }
 
 const payload: GeneratorDescription = { name: 'FakeGenerator', code: 'foo("bar");' };
 const exampleGenerator: Generator = { id: '1', ...payload }
 
 const api: Requestable = new Api(axios);
-const repository = new GeneratorsRepository(handler, api);
+const repository = new GeneratorsRepository(api);
+const token: string = "422";
 
 describe('#list', () => {
   const spy = vi.spyOn(axios, 'get')
 
   it('Makes only one query on the API', () => {
-    repository.list();
+    repository.list(token);
     expect(spy).toHaveBeenCalledOnce();
   });
   it('Correctly queries for the list of generators', () => {
-    repository.list();
+    repository.list(token);
     expect(spy).toBeCalledWith('/proxy/generators', { auth_token: "422" });
   });
 });
@@ -30,11 +28,11 @@ describe('#create', () => {
   const spy = vi.spyOn(axios, 'post')
 
   it('Makes only one query on the API', () => {
-    repository.create(payload);
+    repository.create(payload, token);
     expect(spy).toHaveBeenCalledOnce();
   });
   it('Correctly formats the query to create a generator', () => {
-    repository.create(payload);
+    repository.create(payload, token);
     expect(spy).toBeCalledWith('/proxy/generators', { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" });
   });
 });
@@ -43,11 +41,11 @@ describe('#update', () => {
   const spy = vi.spyOn(axios, 'put')
 
   it('Makes only one query on the API', () => {
-    repository.update(exampleGenerator);
+    repository.update(exampleGenerator, token);
     expect(spy).toHaveBeenCalledOnce();
   });
   it('Correctly formats the query to update a generator', () => {
-    repository.update(exampleGenerator);
+    repository.update(exampleGenerator, token);
     expect(spy).toBeCalledWith('/proxy/generators/1', { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" });
   });
 });
