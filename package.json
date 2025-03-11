@@ -19,7 +19,8 @@
     "vitest": "^3.0.8"
   },
   "scripts": {
-    "test": "vitest --ui"
+    "test": "vitest --ui",
+    "publish": "tsc && pnpm publish"
   },
   "repository": {
     "type": "git",
