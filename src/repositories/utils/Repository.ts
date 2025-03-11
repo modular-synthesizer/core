@@ -1,4 +1,6 @@
+import { Identified } from "../../types/utils/Identified";
 import { BaseRepository } from "./BaseRepository"
+import { omit, pick } from 'lodash';
 
 /**
  * This class is used by most repositories as it provides classic CRUD actions on a resource.
@@ -8,7 +10,7 @@ import { BaseRepository } from "./BaseRepository"
  * resource (for example in case of login sessions), sometimes not.
  * @author Vincent Courtois <courtois.vincent@outlook.com>
  */
-export class Repository<Payload, CreationPayload = Payload> extends BaseRepository {
+export class Repository<Payload extends Identified, CreationPayload = Payload> extends BaseRepository {
   
   /**
    * Transforms a creation payload in an actual instance of the resource by calling the POST /
@@ -40,5 +42,18 @@ export class Repository<Payload, CreationPayload = Payload> extends BaseReposito
    */
   public async get(id: string): Promise<Payload> {
     return (await this.api.get(this.uri(id), {})).json();
+  }
+
+  /**
+   * Updates an instance of a model on the API by formatting, limiting, and sending its object representation
+   * to the API so that it can be further queried on the backend.
+   * 
+   * @param payload The instance of the resource to update the fields of.
+   * @param keys an array of keys available in the instance of the resource to limit the update to them.
+   * @returns the updated version of the record after API request and response.
+   */
+  public async update(payload: Payload, keys?: Array<keyof Payload>): Promise<Payload> {
+    const filtered: Record<keyof Payload, any> = keys ? pick(payload, keys) : payload;
+    return (await this.api.put(this.uri(payload.id), omit(filtered, 'id'))).json()
   }
 }
