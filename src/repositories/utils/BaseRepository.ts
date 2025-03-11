@@ -1,4 +1,10 @@
 import { Api, Requestable } from "../../network/Api";
+import { Session } from "../../types/Session";
+
+export type SessionHandler = {
+  session: Session,
+  reset: () => void
+}
 
 /**
  * A repository links a given model to a set of methods on the API. It provides easy methods
@@ -9,13 +15,16 @@ export class BaseRepository {
     public readonly resource: string = '';
     // The API object passed as parameter in the constructor to enhance testability.
     public readonly api: Requestable;
+
+    public readonly handler: SessionHandler;
   
     /**
      * @param resource The base URI to build all URLs from, designating the resource to manipulate.
      * @param api The Requestable object making requests on the API, used to format and fetch requests.
      */
-    public constructor(resource: string = '', api: Requestable = new Api()) {
+    public constructor(resource: string, handler: SessionHandler, api: Requestable = new Api()) {
       this.resource = resource;
+      this.handler = handler;
       this.api = api;
     }
 
