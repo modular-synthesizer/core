@@ -1,11 +1,12 @@
 import { expect, test, vi } from 'vitest';
-import { Api, Fetcher } from '../../src/network/Api';
+import { Api } from '../../src/network/Api';
+import axios from 'axios';
 
-const fetcher: Fetcher = vi.fn();
-const api = new Api(fetcher);
+const api = new Api(axios);
 
 test('Call the API correctly with the get method.', () => {
+  const spy = vi.spyOn(axios, 'get');
   api.get('/test');
-  expect(fetcher).toHaveBeenCalledOnce();
-  expect(fetcher).toHaveBeenCalledWith('/proxy/test', { method: 'get' })
+  expect(spy).toHaveBeenCalledOnce();
+  expect(spy).toHaveBeenCalledWith('/proxy/test', {})
 })

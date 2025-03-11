@@ -20,7 +20,7 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @returns The created instance of the resource with all fields duely filled.
    */
   public async create(payload: CreationPayload): Promise<Payload> {
-    return (await this.api.post(this.uri(), payload)).json();
+    return (await this.api.post(this.uri(), payload)).data;
   }
 
   /**
@@ -31,7 +31,7 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @returns an array of results getting the list of elements requested.
    */
   public async list(payload: Record<string, any> = {}): Promise<Array<Payload>> {
-    return (await this.api.get(this.uri(), payload)).json();
+    return (await this.api.get(this.uri(), payload)).data;
   }
 
   /**
@@ -41,7 +41,7 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @returns The whole instance, formatted as returned by the API.
    */
   public async get(id: string): Promise<Payload> {
-    return (await this.api.get(this.uri(id), {})).json();
+    return (await this.api.get(this.uri(id), {})).data;
   }
 
   /**
@@ -54,6 +54,6 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    */
   public async update(payload: Payload, keys?: Array<keyof Payload>): Promise<Payload> {
     const filtered: Record<keyof Payload, any> = keys ? pick(payload, keys) : payload;
-    return (await this.api.put(this.uri(payload.id), omit(filtered, 'id'))).json()
+    return (await this.api.put(this.uri(payload.id), omit(filtered, 'id'))).data;
   }
 }

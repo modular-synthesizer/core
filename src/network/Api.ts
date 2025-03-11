@@ -1,10 +1,12 @@
+import axios, { AxiosResponse } from "axios";
+
 export interface Requestable {
-  get(url: string, payload: Record<string, any>): Promise<Response>;
-  post(url: string, payload: Record<string, any>): Promise<Response>;
-  put(url: string, payload: Record<string, any>): Promise<Response>;
+  get(url: string, payload: Record<string, any>): Promise<AxiosResponse>;
+  post(url: string, payload: Record<string, any>): Promise<AxiosResponse>;
+  put(url: string, payload: Record<string, any>): Promise<AxiosResponse>;
 }
 
-export type Fetcher = typeof window.fetch;
+export type Fetcher = typeof axios;
 
 /**
  * The API is capable of querying a proxy route in the frontend to directly query the API in the backend.
@@ -18,33 +20,25 @@ export class Api implements Requestable {
   // The prefix to query the API, pass it to an empty string to call the exact route given in calls.
   private prefix: string;
 
-  public constructor(fetcher: Fetcher = window.fetch, prefix: string = '/proxy')  {
+  public constructor(fetcher: Fetcher = axios, prefix: string = '/proxy')  {
     this.fetcher = fetcher;
     this.prefix = prefix;
   }
 
-  public async get(url: string = '', payload: Record<string, any> = {}): Promise<Response> {
-    const params: URLSearchParams = new URLSearchParams(payload);
-    const fullUrl: string = this.complete(url);
-    const urlWithParams: string = `${fullUrl}${params.toString() === '' ? '' : `?${params}`}`;
-    return await this.fetcher(urlWithParams, { method: 'get' });
+  public async get(url: string = '', params: Record<string, any> = {}): Promise<AxiosResponse> {
+    return await this.fetcher.get(this.complete(url), params);
   }
 
-  public async post(url: string = '', payload: Record<string, any> = {}): Promise<Response> {
-    return this.requestWithBody('post', url, payload);
+  public async post(url: string = '', data: Record<string, any> = {}): Promise<AxiosResponse> {
+    return await this.fetcher.post(this.complete(url), data);
   }
 
-  public async put(url: string = '', payload: Record<string, any> = {}): Promise<Response> {
-    return this.requestWithBody('put', url, payload);
+  public async put(url: string = '', data: Record<string, any> = {}): Promise<AxiosResponse> {
+    return await this.fetcher.put(this.complete(url), data);
   }
 
   public complete(url: string): string {
     if (url[0] === '/') url = url.slice(1, url.length);
     return [this.prefix, url].join('/');
-  }
-
-  private async requestWithBody(method: 'post'|'put', url: string, payload: Record<string, any>): Promise<Response> {
-    const fullUrl: string = this.complete(url);
-    return await this.fetcher(fullUrl, { method, body: JSON.stringify(payload) });
   }
 }
