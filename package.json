@@ -20,7 +20,7 @@
   },
   "scripts": {
     "test": "vitest --ui",
-    "buildAndPublish": "tsc && pnpm publish"
+    "buildAndPublish": "rm -rf dist/ && tsc && pnpm publish"
   },
   "repository": {
     "type": "git",
