@@ -4,7 +4,7 @@ export interface Requestable {
   put(url: string, payload: Record<string, any>): Promise<Response>;
 }
 
-export type Fetcher = typeof fetch;
+export type Fetcher = typeof window.fetch;
 
 /**
  * The API is capable of querying a proxy route in the frontend to directly query the API in the backend.
@@ -18,7 +18,7 @@ export class Api implements Requestable {
   // The prefix to query the API, pass it to an empty string to call the exact route given in calls.
   private prefix: string;
 
-  public constructor(fetcher: Fetcher = fetch, prefix: string = '/proxy')  {
+  public constructor(fetcher: Fetcher = window.fetch, prefix: string = '/proxy')  {
     this.fetcher = fetcher;
     this.prefix = prefix;
   }
