@@ -21,7 +21,14 @@ export class Repository<Payload, CreationPayload = Payload> extends BaseReposito
     return;
   }
 
+  /**
+   * List all the instances of a resource respecting a series of criteria. Every instance
+   * corresponding to ALL the criterias will be sent in the response from the API.
+   * 
+   * @param payload The filtering criteria applied to this listing search.
+   * @returns an array of results getting the list of elements requested.
+   */
   public async list(payload: Record<string, any> = {}): Promise<Array<Payload>> {
-    return (await this.api.get(this.uri('/'), payload)).json() as unknown as Array<Payload>;
+    return (await this.api.get(this.uri('/'), payload)).json();
   }
 }

@@ -7,8 +7,6 @@ import { Api, Requestable } from "../network/Api";
 export class BaseRepository {
     // The root of all the APIs concerning this resource, with a leading slash character.
     public readonly resource: string = '';
-    // The main URI used in the frontend to define the route forwarding requests to the API.
-    public readonly BASE_URI = process?.env?.BASE_API_URI ?? '/proxy';
     // The API object passed as parameter in the constructor to enhance testability.
     public readonly api: Requestable;
   
@@ -30,6 +28,6 @@ export class BaseRepository {
     public uri(appended: string = ''): string {
       const resource: string[] = this.resource === '' ? [] : [ this.resource ];
       const ending: string[] = appended === '' ? [] : [ appended ];
-      return [ this.BASE_URI, ...resource, ...ending ].join('/');
+      return [ ...resource, ...ending ].join('/');
     }
 }
