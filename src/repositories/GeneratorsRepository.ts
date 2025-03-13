@@ -1,4 +1,4 @@
-import { Api, Requestable } from "../network/Api";
+import { Requestable } from "../network/Api";
 import { Generator, GeneratorDescription } from "../types/Generator";
 import { Repository } from "./utils/Repository";
 
@@ -8,7 +8,7 @@ import { Repository } from "./utils/Repository";
  * @author vincent Courtois <courtois.vincent@outlook.com>
  */
 export class GeneratorsRepository extends Repository<Generator, GeneratorDescription> {
-  public constructor(api: Requestable = new Api()) {
+  public constructor(api: Requestable) {
     super('generators', api)
   }
 };

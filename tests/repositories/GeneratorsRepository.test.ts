@@ -1,54 +1,56 @@
-import { describe, expect, it, vi } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { Api, Requestable } from '../../src/network/Api';
 import { GeneratorsRepository } from '../../src/repositories'
 import { GeneratorDescription, type Generator } from '../../src/types/Generator'
-import axios from 'axios';
+import { mockFetch } from "../setups/fetch"
 
 const payload: GeneratorDescription = { name: 'FakeGenerator', code: 'foo("bar");' };
-const exampleGenerator: Generator = { id: '1', ...payload }
-
-const api: Requestable = new Api(axios);
+const exampleGenerator: Generator = { ...payload, id: "1" };
+const fakeFetch = vi.fn();
+const api: Requestable = new Api(fakeFetch);
 const repository = new GeneratorsRepository(api);
-const token: string = "422";
+const token = "422";
 
 describe('#list', () => {
-  const spy = vi.spyOn(axios, 'get')
+  beforeEach(() => mockFetch(fakeFetch, []))
 
   it('Makes only one query on the API', () => {
     repository.list(token);
-    expect(spy).toHaveBeenCalledOnce();
+    expect(fakeFetch).toHaveBeenCalledOnce();
   });
   it('Correctly queries for the list of generators', () => {
     repository.list(token);
-    expect(spy).toBeCalledWith('/proxy/generators', { params: { auth_token: "422" } });
+    expect(fakeFetch).toBeCalledWith('/proxy/generators?auth_token=422', { method: 'get' });
   });
 });
 
 describe('#create', () => {
-  const spy = vi.spyOn(axios, 'post')
+  beforeEach(() => mockFetch(fakeFetch, exampleGenerator))
 
   it('Makes only one query on the API', () => {
     repository.create(payload, token);
-    expect(spy).toHaveBeenCalledOnce();
+    expect(fakeFetch).toHaveBeenCalledOnce();
   });
   it('Correctly formats the query to create a generator', () => {
     repository.create(payload, token);
-    expect(spy).toBeCalledWith('/proxy/generators', {
+    expect(fakeFetch).toBeCalledWith('/proxy/generators', {
+      method: "post",
       data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" }
     });
   });
 });
 
 describe('#update', () => {
-  const spy = vi.spyOn(axios, 'put')
+  beforeEach(() => mockFetch(fakeFetch, exampleGenerator))
 
   it('Makes only one query on the API', () => {
     repository.update(exampleGenerator, token);
-    expect(spy).toHaveBeenCalledOnce();
+    expect(fakeFetch).toHaveBeenCalledOnce();
   });
   it('Correctly formats the query to update a generator', () => {
     repository.update(exampleGenerator, token);
-    expect(spy).toBeCalledWith('/proxy/generators/1', {
+    expect(fakeFetch).toBeCalledWith('/proxy/generators/1', {
+      method: "put",
       data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" }
     });
   });

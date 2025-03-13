@@ -1,4 +1,4 @@
-import { Api, Requestable } from "../network/Api";
+import { Requestable } from "../network/Api";
 import { Synthesizer, SynthesizerDescription } from "../types/Synthesizer";
 import { Repository } from "./utils/Repository";
 
@@ -9,7 +9,7 @@ import { Repository } from "./utils/Repository";
  * @author Vincent Courtois <courtois.vincent@outlook.com>
  */
 export class SynthesizersRepository extends Repository<Synthesizer, SynthesizerDescription> {
-  public constructor(api: Requestable = new Api()) {
+  public constructor(api: Requestable) {
     super('synthesizers', api);
   }
   

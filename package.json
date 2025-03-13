@@ -1,6 +1,6 @@
 {
   "name": "@jsynple/core",
-  "version": "0.2.11",
+  "version": "0.3.0",
   "description": "All the core modules and types for the Synple application",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -9,10 +9,10 @@
   ],
   "packageManager": "pnpm@10.4.1+sha512.c753b6c3ad7afa13af388fa6d808035a008e30ea9993f58c6663e2bc5ff21679aa834db094987129aa4d488b86df57f7b634981b2f827cdcacc698cc0cfb88af",
   "dependencies": {
+    "@jsynple/core": "link:",
     "@synple/core": "link:",
     "@types/node": "^22.13.10",
     "@vitest/ui": "^3.0.8",
-    "axios": "^1.8.2",
     "lodash": "^4.17.21"
   },
   "devDependencies": {
@@ -23,8 +23,9 @@
     "vitest": "^3.0.8"
   },
   "scripts": {
-    "test": "vitest --ui",
-    "buildAndPublish": "rm -rf dist/ && tsc && pnpm publish"
+    "test": "vitest",
+    "uiTest": "vitest --ui",
+    "buildAndPublish": "rm -rf dist/ && tsc && pnpm publish --no-git-checks"
   },
   "repository": {
     "type": "git",
