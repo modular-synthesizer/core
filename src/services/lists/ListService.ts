@@ -1,6 +1,6 @@
 import { Repository } from "../../repositories";
 import { Identified } from "../../types";
-import { indexOf, remove } from 'lodash'
+import { find, findIndex, remove } from 'lodash'
 
 /**
  * A list service provides utility methods for handling lists of specific items, a thing we tend to do
@@ -41,17 +41,21 @@ export class ListService<Wrapped extends Identified, CreationWrapper = Wrapped> 
   }
 
   public update(item: Wrapped): Promise<Wrapped> {
-    return this.repository.update(item, this.token);
+    const index: number = findIndex(this.items, i => i.id === item.id);
+    if (index >= 0) {
+      const newItem: Wrapped = { ...this.items[index], ...item };
+      this.items[index] = newItem;
+      return this.repository.update(newItem, this.token);
+    }
   }
 
-  public delete(item: Wrapped) {
-    this.repository.delete(item.id, this.token);
-    remove(this.items, { id: item.id })
+  public delete(item: Wrapped|string) {
+    const id: string = typeof item === 'string' ? item : item.id;
+    this.repository.delete(id, this.token);
+    remove(this.items, (iteratee: Wrapped) => id === iteratee.id)
   }
 
   private append(item: Wrapped) {
-    if (indexOf(this.items, { id: item.id }) < 0) {
-      this.items.push(item);
-    }
+    if (!find(this.items, { id: item.id })) this.items.push(item);
   }
 }

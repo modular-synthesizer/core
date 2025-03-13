@@ -38,7 +38,7 @@ export class Api implements Requestable {
     return await this.makeRequest('put', this.complete(url), { data });
   }
   public async delete(url = '', params: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('delete', this.complete(url), { params });
+    return await this.makeRequest('delete', this.completeWithParams(url, params as Record<string, string>));
   }
 
   private async makeRequest(method: string, url: string, payload: Record<string, unknown> = {}): Promise<Response> {
