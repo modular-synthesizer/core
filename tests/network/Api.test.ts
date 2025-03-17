@@ -7,5 +7,5 @@ const api = new Api(fakeFetch);
 test('Call the API correctly with the get method.', () => {
   api.get('/test');
   expect(fakeFetch).toHaveBeenCalledOnce();
-  expect(fakeFetch).toHaveBeenCalledWith('/proxy/test', { method: 'get' })
+  expect(fakeFetch).toHaveBeenCalledWith('/proxy/test?t=620430600000', { method: 'get' })
 })

@@ -27,18 +27,18 @@ export class Api implements Requestable {
   }
 
   public async get(url = '', params: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('get', this.completeWithParams(url, params as Record<string, string>));
+    return await this.makeRequest('get', this.completeWithParams(url, this.timestamp(params)));
   }
 
   public async post(url = '', data: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('post', this.complete(url), { data });
+    return await this.makeRequest('post', this.complete(url), { data: this.timestamp(data) });
   }
 
   public async put(url = '', data: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('put', this.complete(url), { data });
+    return await this.makeRequest('put', this.complete(url), { data: this.timestamp(data) });
   }
   public async delete(url = '', params: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('delete', this.completeWithParams(url, params as Record<string, string>));
+    return await this.makeRequest('delete', this.completeWithParams(url, this.timestamp(params)));
   }
 
   private async makeRequest(method: string, url: string, payload: Record<string, unknown> = {}): Promise<Response> {
@@ -54,5 +54,9 @@ export class Api implements Requestable {
     let queryString = '';
     if (!isEmpty(params)) queryString += `?${(new URLSearchParams(params)).toString()}`;
     return `${this.complete(url)}${queryString}`
+  }
+
+  private timestamp(data: Record<string, unknown>): Record<string, string> {
+    return { ...data, t: `${+(new Date())}` };
   }
 }

@@ -60,7 +60,7 @@ describe('#update', () => {
     // Check that the update query has been correctly done on the backend.
     expect(fakeFetch).toHaveBeenCalledWith("/proxy/generators/2", {
       method: "put", 
-      data: { auth_token: '422', name: "NewName", code: 'any("code");' }
+      data: { auth_token: '422', name: "NewName", code: 'any("code");', t: "620430600000" }
     });
     expect(list.all[1].name).toEqual('NewName')
   });
@@ -72,7 +72,7 @@ describe('#delete', () => {
     await list.fetch();
     mockFetch(fakeFetch, { ... payload, id: '2'});
     await list.delete({ id: '1' });
-    expect(fakeFetch).toHaveBeenCalledWith("/proxy/generators/1?auth_token=422", {
+    expect(fakeFetch).toHaveBeenCalledWith("/proxy/generators/1?auth_token=422&t=620430600000", {
       method: "delete", 
     });
     expect(list.all[0].id).toEqual('2')
@@ -82,7 +82,7 @@ describe('#delete', () => {
     await list.fetch();
     mockFetch(fakeFetch, { ... payload, id: '2'});
     await list.delete('1');
-    expect(fakeFetch).toHaveBeenCalledWith("/proxy/generators/1?auth_token=422", {
+    expect(fakeFetch).toHaveBeenCalledWith("/proxy/generators/1?auth_token=422&t=620430600000", {
       method: "delete", 
     });
     expect(list.all[0].id).toEqual('2')

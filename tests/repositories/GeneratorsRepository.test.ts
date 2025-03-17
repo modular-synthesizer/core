@@ -20,7 +20,7 @@ describe('#list', () => {
   });
   it('Correctly queries for the list of generators', () => {
     repository.list(token);
-    expect(fakeFetch).toBeCalledWith('/proxy/generators?auth_token=422', { method: 'get' });
+    expect(fakeFetch).toBeCalledWith('/proxy/generators?auth_token=422&t=620430600000', { method: 'get' });
   });
 });
 
@@ -35,7 +35,7 @@ describe('#create', () => {
     repository.create(payload, token);
     expect(fakeFetch).toBeCalledWith('/proxy/generators', {
       method: "post",
-      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" }
+      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422", t: "620430600000" }
     });
   });
 });
@@ -51,7 +51,7 @@ describe('#update', () => {
     repository.update(exampleGenerator, token);
     expect(fakeFetch).toBeCalledWith('/proxy/generators/1', {
       method: "put",
-      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422" }
+      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422", t: "620430600000" }
     });
   });
 });
