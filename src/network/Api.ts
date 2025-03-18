@@ -31,11 +31,11 @@ export class Api implements Requestable {
   }
 
   public async post(url = '', data: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('post', this.complete(url), { data: this.timestamp(data) });
+    return await this.makeRequest('post', this.complete(url), { body: this.body(data) });
   }
 
   public async put(url = '', data: Record<string, unknown> = {}): Promise<Response> {
-    return await this.makeRequest('put', this.complete(url), { data: this.timestamp(data) });
+    return await this.makeRequest('put', this.complete(url), { body: this.body(data) });
   }
   public async delete(url = '', params: Record<string, unknown> = {}): Promise<Response> {
     return await this.makeRequest('delete', this.completeWithParams(url, this.timestamp(params)));
@@ -57,6 +57,10 @@ export class Api implements Requestable {
   }
 
   private timestamp(data: Record<string, unknown>): Record<string, string> {
-    return { ...data, t: `${+(new Date())}` };
+    return { ...data, t: `${Date.now()}` };
+  }
+
+  private body(data: Record<string, unknown>): string {
+    return JSON.stringify(this.timestamp(data))
   }
 }
