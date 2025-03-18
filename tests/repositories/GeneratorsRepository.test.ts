@@ -33,9 +33,10 @@ describe('#create', () => {
   });
   it('Correctly formats the query to create a generator', () => {
     repository.create(payload, token);
+    const body = JSON.stringify({ auth_token: "422", name: 'FakeGenerator', code: 'foo("bar");', t: "620430600000" })
     expect(fakeFetch).toBeCalledWith('/proxy/generators', {
       method: "post",
-      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422", t: "620430600000" }
+      body
     });
   });
 });
@@ -49,9 +50,9 @@ describe('#update', () => {
   });
   it('Correctly formats the query to update a generator', () => {
     repository.update(exampleGenerator, token);
+    const body = JSON.stringify({ auth_token: "422", name: 'FakeGenerator', code: 'foo("bar");', t: "620430600000" });
     expect(fakeFetch).toBeCalledWith('/proxy/generators/1', {
-      method: "put",
-      data: { name: 'FakeGenerator', code: 'foo("bar");', auth_token: "422", t: "620430600000" }
+      method: "put", body
     });
   });
 });

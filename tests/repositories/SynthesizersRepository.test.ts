@@ -15,8 +15,9 @@ describe('#update', () => {
 
   it('Only updates the coordinates and scale factor when updating a synthesizer', () => {
     repository.update(synthesizer, "422");
+    const body = JSON.stringify({ auth_token: "422", scale: 1.0, x: 0, y: 0, t: "620430600000" })
     expect(fakeFetch).toBeCalledWith('/proxy/synthesizers/1', {
-      data: { scale: 1.0, x: 0, y: 0, auth_token: "422", t: "620430600000" }, method: "put"
+      method: "put", body
     });
   });
 });

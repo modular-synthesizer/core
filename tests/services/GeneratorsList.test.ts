@@ -60,7 +60,7 @@ describe('#update', () => {
     // Check that the update query has been correctly done on the backend.
     expect(fakeFetch).toHaveBeenCalledWith("/proxy/generators/2", {
       method: "put", 
-      data: { auth_token: '422', name: "NewName", code: 'any("code");', t: "620430600000" }
+      body: JSON.stringify({ auth_token: '422', name: "NewName", code: 'any("code");', t: "620430600000" })
     });
     expect(list.all[1].name).toEqual('NewName')
   });
