@@ -56,7 +56,7 @@ export class Repository<Payload extends Identified, CreationPayload = Payload> e
    * @param keys an array of keys available in the instance of the resource to limit the update to them.
    * @returns the updated version of the record after API request and response.
    */
-  public async update(payload: Payload, token: string, keys?: (keyof Payload)[]): Promise<Payload> {
+  public async update(payload: Partial<Payload> & Identified, token: string, keys?: (keyof Payload)[]): Promise<Payload> {
     const filtered = omit(keys ? pick(payload, keys) : payload, 'id');
     return (await this.api.put(this.uri(payload.id), this.enrich(filtered, token))).json();
   }
