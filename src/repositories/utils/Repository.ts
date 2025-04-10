@@ -1,4 +1,4 @@
-import { Identified } from "../../types/utils/Identified";
+import type { Identified } from "../../types/utils/Identified";
 import { BaseRepository } from "./BaseRepository"
 import { omit, pick } from 'lodash';
 

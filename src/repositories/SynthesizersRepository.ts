@@ -1,5 +1,5 @@
-import { Requestable } from "../network/Api";
-import { Synthesizer, SynthesizerDescription } from "../types/Synthesizer";
+import type { Requestable } from "../network/Api";
+import type { Synthesizer, SynthesizerDescription } from "../types/Synthesizer";
 import { Repository } from "./utils/Repository";
 
 /**

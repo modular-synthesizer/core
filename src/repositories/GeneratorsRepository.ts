@@ -1,5 +1,5 @@
-import { Requestable } from "../network/Api";
-import { Generator, GeneratorDescription } from "../types/Generator";
+import type { Requestable } from "../network/Api";
+import type { Generator, GeneratorDescription } from "../types/Generator";
 import { Repository } from "./utils/Repository";
 
 /**

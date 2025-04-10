@@ -1,4 +1,4 @@
-import { Requestable } from "../../network/Api";
+import type { Requestable } from "../../network/Api";
 
 /**
  * A repository links a given model to a set of methods on the API. It provides easy methods
